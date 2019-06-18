@@ -1,0 +1,37 @@
+{
+  "name": "less-compile-roots",
+  "version": "0.1.0",
+  "description": "Tool for extracting and compiling root Less files",
+  "main": "dist/index.js",
+  "module": "src/index.mjs",
+  "scripts": {
+    "lint": "eslint src/**/*.mjs",
+    "build": "rollup -c"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Amphiluke/less-compile-roots.git"
+  },
+  "keywords": [
+    "less"
+  ],
+  "author": "Amphiluke",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Amphiluke/less-compile-roots/issues"
+  },
+  "homepage": "https://github.com/Amphiluke/less-compile-roots#readme",
+  "dependencies": {
+    "fast-glob": "^3.0.1"
+  },
+  "devDependencies": {
+    "eslint": "^5.16.0",
+    "rollup": "^1.15.6"
+  },
+  "peerDependencies": {
+    "less": ">=2.0.0"
+  },
+  "engines": {
+    "node": ">=9.11.2"
+  }
+}
