@@ -51,7 +51,7 @@ The supported options are:
 
 ### `getRoots(options)`
 
-This methods just returns a Promise that resolves with a list of the root file paths. It accepts the same options as the [`compileRoots`](#compileroots-options) method except the `lessOptions` parameter. This method may be useful if you just need to get the list of root Less files without compiling them.
+This methods just returns a Promise that resolves with a list of the root file paths. It accepts the same options as the [`compileRoots`](#compilerootsoptions) method except the `lessOptions` parameter. This method may be useful if you just need to get the list of root Less files without compiling them.
 
 ## Requirements
 

@@ -28,6 +28,7 @@ async function getImports(entries) {
 
 function compile(entries, lessOptions) {
     let less = require("less");
+    let inlineMap = lessOptions.sourceMap && lessOptions.sourceMap.sourceMapFileInline;
     let promises = entries.map(entry =>
         readFile(entry)
             .then(data => less.render(data, {
@@ -37,10 +38,10 @@ function compile(entries, lessOptions) {
             }))
             .then(({css, map}) => {
                 let writeCSS = writeFile(setExt(entry, ".css"), css);
-                if (!map) {
+                if (!map || inlineMap) {
                     return writeCSS;
                 }
-                let writeMap = writeFile(setExt(entry, ".map"), map);
+                let writeMap = writeFile(setExt(entry, ".css.map"), map);
                 return Promise.all([writeCSS, writeMap]);
             })
     );
