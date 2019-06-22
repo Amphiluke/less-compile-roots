@@ -71,6 +71,8 @@ function getArg(name) {
         }
         handlers.compile({pattern: pattern.split(",")});
     } else if (configPath) {
+        let path = require("path");
+        configPath = path.join(process.cwd(), configPath);
         handlers.compile(require(configPath));
     } else {
         console.error("You must either specify the file pattern or provide the config file path");
