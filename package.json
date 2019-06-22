@@ -1,9 +1,12 @@
 {
   "name": "less-compile-roots",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Tool for extracting and compiling root Less files",
   "main": "dist/index.js",
   "module": "src/index.mjs",
+  "bin": {
+    "less-compile-roots": "./bin/less-compile-roots.js"
+  },
   "scripts": {
     "lint": "eslint src/**/*.mjs",
     "build": "rollup -c"
@@ -13,7 +16,8 @@
     "url": "git+https://github.com/Amphiluke/less-compile-roots.git"
   },
   "keywords": [
-    "less"
+    "less",
+    "glob"
   ],
   "author": "Amphiluke",
   "license": "MIT",
