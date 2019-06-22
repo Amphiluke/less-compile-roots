@@ -14,7 +14,7 @@ npm install less-compile-roots
 
 ## Usage
 
-Here is a basic usage example:
+Here is a basic programmatic usage example:
 
 ```javascript
 let lessCompileRoots = require("less-compile-roots");
@@ -35,6 +35,8 @@ lessCompileRoots.compileRoots({
 });
 ```
 
+If you prefer using the tool through the command line, please refer the [Command line usage](#command-line-usage) section.
+
 ## API
 
 The following methods are exported by the `less-compile-roots` module:
@@ -45,13 +47,48 @@ The method picks out the root Less files from all files matching the provided gl
 
 The supported options are:
 
-* `pattern` _(required)_: a glob pattern (or a list of patterns) matching your source Less files. Please refer the [fast-glob docs](https://github.com/mrmlnc/fast-glob#patterns) for details.
-* `lessOptions` _(optional)_: the options object to pass to the [`less.render` method](http://lesscss.org/usage/#programmatic-usage). The [available options](http://lesscss.org/usage/#less-options) are listed in the official Less documentation.
+* `pattern` _(required)_: a glob pattern (or a list of patterns) matching your source Less files. Please refer the [fast-glob docs](https://github.com/mrmlnc/fast-glob#patterns) for details;
+* `lessOptions` _(optional)_: the options object to pass to the [`less.render` method](http://lesscss.org/usage/#programmatic-usage). The [available options](http://lesscss.org/usage/#less-options) are listed in the official Less documentation;
 * `globOptions` _(optional)_: the options object to pass to the fast-glob function. See their [docs](https://github.com/mrmlnc/fast-glob#options-1) for details.
 
 ### `getRoots(options)`
 
 This methods just returns a Promise that resolves with a list of the root file paths. It accepts the same options as the [`compileRoots`](#compilerootsoptions) method except the `lessOptions` parameter. This method may be useful if you just need to get the list of root Less files without compiling them.
+
+## Command line usage
+
+You may also use `less-compile-roots` through the command line interface:
+
+```sh
+# Compile root files using default options
+less-compile-roots --pattern=src/**/*.less
+
+# or use custom config from a specified file
+less-compile-roots --config=less-compile-config.js
+```
+
+Available options:
+
+* `--pattern=<glob>`: a glob pattern (or several comma-separated patterns) matching your source Less files;
+* `--config=<path>`: path to a config module;
+* `--help`: print CLI usage info;
+* `--version`: print the installed package version.
+
+Note that you cannot use the options `--pattern` and `--config` together. Specifying the `--pattern` option makes the module compile Less files using all default parameters. If you need to customize the parameters, create a config file and specify the path to it through the `--config` option (or just use the module [programmatically](#api) rather than in command line). Here is an example of such config file:
+
+```javascript
+let LessPlugin = require('less-plugin-myplugin');
+module.exports = {
+    pattern: ["project-1/css/**/*.less", "project-2/css/**/*.less"],
+    lessOptions: {
+        plugins: [LessPlugin],
+        sourceMap: {sourceMapFileInline: true},
+        urlArgs: "t=" + Date.now()
+    }
+};
+```
+
+In fact, the config module just exports an object which is then used as the `options` parameter for the [compileRoots](#compilerootsoptions) method.
 
 ## Requirements
 
