@@ -88,7 +88,7 @@ module.exports = {
 };
 ```
 
-In fact, the config module just exports an object which is used as the `options` parameter for the [compileRoots](#compilerootsoptions) method.
+In fact, the config module just exports an object which is then used as the `options` parameter for the [compileRoots](#compilerootsoptions) method.
 
 ## Requirements
 
