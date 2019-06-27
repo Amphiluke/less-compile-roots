@@ -65,7 +65,6 @@ function compile(entries, lessOptions) {
         readFile(entry)
             .then(data => less.render(data, {
                 ...lessOptions,
-                paths: path.dirname(entry),
                 filename: entry
             }))
             .then(({css, map}) => {
