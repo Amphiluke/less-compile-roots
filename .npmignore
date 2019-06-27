@@ -1,3 +1,4 @@
 .idea
 .eslint*
 rollup.config.js
+*.tgz
