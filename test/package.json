@@ -1,0 +1,17 @@
+{
+  "name": "less-compile-root-test",
+  "version": "1.0.0",
+  "description": "Simple test package for the less-compile-roots module",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx del 'less/*.css' && less-compile-roots --pattern=less/*.less",
+    "test-api": "npx del 'less/*.css' && node ./test-api.js"
+  },
+  "author": "Amphiluke",
+  "license": "MIT",
+  "dependencies": {
+    "del-cli": "^2.0.0",
+    "less": "^3.9.0",
+    "less-compile-roots": "file:../less-compile-roots-0.2.3.tgz"
+  }
+}

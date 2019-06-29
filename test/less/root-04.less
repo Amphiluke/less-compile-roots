@@ -1,0 +1,20 @@
+// Test some “quirky” cases
+
+// With line breaks
+@import
+    "child-04";
+
+@import
+
+"child-04-1"
+
+;
+
+@import (reference) "child-04";
+
+// Variable name includes substring “import”
+@import01: "root-01";
+
+body {
+    background:#000;
+}
