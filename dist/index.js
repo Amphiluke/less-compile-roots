@@ -39,7 +39,7 @@ let flat = Array.prototype.flat ? list => list.flat() : list => [].concat(...lis
 
 async function getImports(entries) {
     let commentRE = /\/\*[\s\S]*?\*\/|\/\/\s*@import[^;]+;/g;
-    let importRE = /(?<=@import[^"']+["']).+?(?=['"]\s*;)/g;
+    let importRE = /(?<=@import\s[^"']*["']).+?(?=['"]\s*;)/g;
     let promises = entries.map(entry =>
         readFile(entry)
             .then(data => {
@@ -87,7 +87,8 @@ async function getRoots({pattern, globOptions = {}}) {
 
 async function compileRoots({pattern, lessOptions = {}, globOptions = {}}) {
     let rootEntries = await getRoots({pattern, globOptions});
-    return compile(rootEntries, lessOptions);
+    await compile(rootEntries, lessOptions);
+    return rootEntries;
 }
 
 exports.compileRoots = compileRoots;

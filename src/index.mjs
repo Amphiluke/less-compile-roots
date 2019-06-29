@@ -7,7 +7,7 @@ let flat = Array.prototype.flat ? list => list.flat() : list => [].concat(...lis
 
 async function getImports(entries) {
     let commentRE = /\/\*[\s\S]*?\*\/|\/\/\s*@import[^;]+;/g;
-    let importRE = /(?<=@import[^"']+["']).+?(?=['"]\s*;)/g;
+    let importRE = /(?<=@import\s[^"']*["']).+?(?=['"]\s*;)/g;
     let promises = entries.map(entry =>
         readFile(entry)
             .then(data => {

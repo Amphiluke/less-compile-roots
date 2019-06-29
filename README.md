@@ -28,7 +28,7 @@ lessCompileRoots.compileRoots({
     }
 })
 .then(rootEntries => {
-    console.log("Root files compiled are following:");
+    console.log("Compiled root files:");
     console.log(rootEntries.join("\n"));
 })
 .catch(reason => {
