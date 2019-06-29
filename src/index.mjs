@@ -55,5 +55,6 @@ export async function getRoots({pattern, globOptions = {}}) {
 
 export async function compileRoots({pattern, lessOptions = {}, globOptions = {}}) {
     let rootEntries = await getRoots({pattern, globOptions});
-    return compile(rootEntries, lessOptions);
+    await compile(rootEntries, lessOptions);
+    return rootEntries;
 }

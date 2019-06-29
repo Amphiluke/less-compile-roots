@@ -19,8 +19,8 @@ Usage:
 Options:
   --pattern=<glob>   Glob pattern (or several comma-separated patterns)
   --config=<path>    Use config from the specified file
-  --help             Display usage info
-  --version          Print the installed package version`);
+  -h, --help         Display usage info
+  -v, --version      Print the installed package version`);
     },
 
     version() {
@@ -53,12 +53,12 @@ function getArg(name) {
 }
 
 (() => {
-    if (getArg("--help")) {
+    if (getArg("--help") || getArg("-h")) {
         handlers.help();
         return;
     }
 
-    if (getArg("--version")) {
+    if (getArg("--version") || getArg("-v")) {
         handlers.version();
         return;
     }

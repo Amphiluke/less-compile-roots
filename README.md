@@ -27,8 +27,9 @@ lessCompileRoots.compileRoots({
         sourceMap: {sourceMapFileInline: true}
     }
 })
-.then(() => {
-    console.log("All done");
+.then(rootEntries => {
+    console.log("Root files compiled are following:");
+    console.log(rootEntries.join("\n"));
 })
 .catch(reason => {
     console.error(reason);
@@ -43,7 +44,7 @@ The following methods are exported by the `less-compile-roots` module:
 
 ### `compileRoots(options)`
 
-The method picks out the root Less files from all files matching the provided glob pattern (`options.pattern`), and compiles them with the Less pre-processor. It returns a Promise that resolves once all these root files have been successfully compiled.
+The method picks out the root Less files from all files matching the provided glob pattern (`options.pattern`), and compiles them with the Less pre-processor. It returns a Promise that resolves once all these root files have been successfully compiled. The list of compiled entries is the value the promise resolves to.
 
 The supported options are:
 
@@ -71,8 +72,8 @@ Available options:
 
 * `--pattern=<glob>`: a glob pattern (or several comma-separated patterns) matching your source Less files;
 * `--config=<path>`: path to a config module;
-* `--help`: print CLI usage info;
-* `--version`: print the installed package version.
+* `-h`, `--help`: print CLI usage info;
+* `-v`, `--version`: print the installed package version.
 
 Note that you cannot use the options `--pattern` and `--config` together. Specifying the `--pattern` option makes the module compile Less files using all default parameters. If you need to customize the parameters, create a config file and specify the path to it through the `--config` option (or just use the module [programmatically](#api) rather than in command line). Here is an example of such config file:
 
