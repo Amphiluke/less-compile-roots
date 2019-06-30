@@ -1,4 +1,5 @@
 .idea
 .eslint*
 rollup.config.js
+test
 *.tgz
