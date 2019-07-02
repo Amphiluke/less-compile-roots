@@ -1,1 +1,1 @@
-test/*.less linguist-detectable=false
+*.less linguist-detectable=false
