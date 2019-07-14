@@ -1,4 +1,5 @@
 .idea
+.gitattributes
 .eslint*
 rollup.config.js
 test
