@@ -8,20 +8,18 @@ let flat = Array.prototype.flat ? list => list.flat() : list => [].concat(...lis
 async function getImports(entries) {
     let commentRE = /\/\*[\s\S]*?\*\/|\/\/\s*@import[^;]+;/g;
     let importRE = /(?<=@import\s[^"']*["']).+?(?=['"]\s*;)/g;
-    let promises = entries.map(entry =>
-        readFile(entry)
-            .then(data => {
-                data = data.replace(commentRE, "");
-                let dir = path.dirname(entry);
-                return (data.match(importRE) || []).map(importPath => {
-                    importPath = path.join(dir, importPath);
-                    if (!path.extname(importPath)) {
-                        importPath += ".less";
-                    }
-                    return importPath;
-                });
-            })
-    );
+    let promises = entries.map(async entry => {
+        let data = await readFile(entry);
+        data = data.replace(commentRE, "");
+        let dir = path.dirname(entry);
+        return (data.match(importRE) || []).map(importPath => {
+            importPath = path.join(dir, importPath);
+            if (!path.extname(importPath)) {
+                importPath += ".less";
+            }
+            return importPath;
+        });
+    });
     let importLists = await Promise.all(promises);
     return new Set(flat(importLists));
 }
@@ -29,21 +27,19 @@ async function getImports(entries) {
 function compile(entries, lessOptions) {
     let less = require("less");
     let inlineMap = lessOptions.sourceMap && lessOptions.sourceMap.sourceMapFileInline;
-    let promises = entries.map(entry =>
-        readFile(entry)
-            .then(data => less.render(data, {
-                ...lessOptions,
-                filename: entry
-            }))
-            .then(({css, map}) => {
-                let writeCSS = writeFile(setExt(entry, ".css"), css);
-                if (!map || inlineMap) {
-                    return writeCSS;
-                }
-                let writeMap = writeFile(setExt(entry, ".css.map"), map);
-                return Promise.all([writeCSS, writeMap]);
-            })
-    );
+    let promises = entries.map(async entry => {
+        let data = await readFile(entry);
+        let {css, map} = await less.render(data, {
+            ...lessOptions,
+            filename: entry
+        });
+        let writeCSS = writeFile(setExt(entry, ".css"), css);
+        if (!map || inlineMap) {
+            return writeCSS;
+        }
+        let writeMap = writeFile(setExt(entry, ".css.map"), map);
+        return Promise.all([writeCSS, writeMap]);
+    });
     return Promise.all(promises);
 }
 
