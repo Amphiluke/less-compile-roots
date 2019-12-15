@@ -10,8 +10,9 @@
   "author": "Amphiluke",
   "license": "MIT",
   "dependencies": {
-    "del-cli": "^2.0.0",
-    "less": "^3.9.0",
-    "less-compile-roots": "file:../less-compile-roots-0.2.4.tgz"
-  }
+    "del-cli": "^3.0.0",
+    "less": "^3.10.3",
+    "less-compile-roots": "file:../less-compile-roots-1.0.0.tgz"
+  },
+  "devDependencies": {}
 }
