@@ -1,6 +1,6 @@
 {
   "name": "less-compile-roots",
-  "version": "0.2.4",
+  "version": "1.0.0",
   "description": "Tool for extracting and compiling root Less files",
   "main": "dist/index.js",
   "module": "src/index.mjs",

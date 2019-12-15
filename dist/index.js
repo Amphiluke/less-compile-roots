@@ -3,37 +3,13 @@
 Object.defineProperty(exports, '__esModule', { value: true });
 
 let fs = require("fs");
-
-function readFile(path) {
-    return new Promise((resolve, reject) => {
-        fs.readFile(path, "utf8", (err, data) => {
-            if (err) {
-                reject(err);
-            } else {
-                resolve(data);
-            }
-        });
-    });
-}
-
-function writeFile(path, data) {
-    return new Promise((resolve, reject) => {
-        fs.writeFile(path, data, err => {
-            if (err) {
-                reject(err);
-            } else {
-                resolve();
-            }
-        });
-    });
-}
-
-function setExt(path, ext, oldExtRE = /\.less$/) {
-    return path.replace(oldExtRE, "") + ext;
-}
-
+let util = require("util");
 let path = require("path");
 let fastGlob = require("fast-glob");
+
+let readFile = util.promisify(fs.readFile);
+let writeFile = util.promisify(fs.writeFile);
+let setExt = (path, ext, oldExtRE = /\.less$/) => path.replace(oldExtRE, "") + ext;
 
 let flat = Array.prototype.flat ? list => list.flat() : list => [].concat(...list);
 
@@ -41,7 +17,7 @@ async function getImports(entries) {
     let commentRE = /\/\*[\s\S]*?\*\/|\/\/\s*@import[^;]+;/g;
     let importRE = /(?<=@import\s[^"']*["']).+?(?=['"]\s*;)/g;
     let promises = entries.map(async entry => {
-        let data = await readFile(entry);
+        let data = await readFile(entry, "utf8");
         data = data.replace(commentRE, "");
         let dir = path.dirname(entry);
         return (data.match(importRE) || []).map(importPath => {
@@ -60,7 +36,7 @@ function compile(entries, lessOptions) {
     let less = require("less");
     let inlineMap = lessOptions.sourceMap && lessOptions.sourceMap.sourceMapFileInline;
     let promises = entries.map(async entry => {
-        let data = await readFile(entry);
+        let data = await readFile(entry, "utf8");
         let {css, map} = await less.render(data, {
             ...lessOptions,
             filename: entry
