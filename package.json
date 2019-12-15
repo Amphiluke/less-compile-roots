@@ -7,6 +7,11 @@
   "bin": {
     "less-compile-roots": "./bin/less-compile-roots.js"
   },
+  "files": [
+    "bin",
+    "dist",
+    "src"
+  ],
   "scripts": {
     "lint": "eslint src/**/*.mjs",
     "build": "rollup -c"
