@@ -4,8 +4,8 @@
   "description": "Simple test package for the less-compile-roots module",
   "main": "index.js",
   "scripts": {
-    "test": "npx del 'less/*.css' && less-compile-roots --pattern=less/*.less",
-    "test-api": "npx del 'less/*.css' && node ./test-api.js"
+    "test": "del 'less/*.css' && less-compile-roots --pattern=less/*.less",
+    "test-api": "del 'less/*.css' && node ./test-api.js"
   },
   "author": "Amphiluke",
   "license": "MIT",
