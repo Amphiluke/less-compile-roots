@@ -11,7 +11,7 @@
   "license": "MIT",
   "dependencies": {
     "del-cli": "^3.0.0",
-    "less": "^3.10.3",
+    "less": "^3.11.1",
     "less-compile-roots": "file:../less-compile-roots-1.0.0.tgz"
   }
 }
