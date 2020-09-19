@@ -34,8 +34,8 @@
     "fast-glob": "^3.2.4"
   },
   "devDependencies": {
-    "eslint": "^7.4.0",
-    "rollup": "^2.22.0"
+    "eslint": "^7.9.0",
+    "rollup": "^2.27.1"
   },
   "peerDependencies": {
     "less": ">=2.0.0"
