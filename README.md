@@ -17,23 +17,18 @@ npm install less-compile-roots
 Here is a basic programmatic usage example:
 
 ```javascript
-let lessCompileRoots = require("less-compile-roots");
+import {compileRoots} from "less-compile-roots";
 
-lessCompileRoots.compileRoots({
+let rootEntries = await compileRoots({
     // Glob pattern matching existing less files
     pattern: "src/**/*.less",
     // Pass any Less.js options you need
     lessOptions: {
         sourceMap: {sourceMapFileInline: true}
     }
-})
-.then(rootEntries => {
-    console.log("Compiled root files:");
-    console.log(rootEntries.join("\n"));
-})
-.catch(reason => {
-    console.error(reason);
 });
+console.log("Compiled root files:");
+console.log(rootEntries.join("\n"));
 ```
 
 If you prefer using the tool through the command line, please refer the [Command line usage](#command-line-usage) section.
@@ -50,7 +45,7 @@ The supported options are:
 
 * `pattern` _(required)_: a glob pattern (or a list of patterns) matching your source Less files. Please refer the [fast-glob docs](https://github.com/mrmlnc/fast-glob#patterns) for details;
 * `lessOptions` _(optional)_: the options object to pass to the [`less.render` method](http://lesscss.org/usage/#programmatic-usage). The [available options](http://lesscss.org/usage/#less-options) are listed in the official Less documentation;
-* `globOptions` _(optional)_: the options object to pass to the fast-glob function. See their [docs](https://github.com/mrmlnc/fast-glob#options-1) for details.
+* `globOptions` _(optional)_: the options object to pass to the fast-glob function. See their [docs](https://github.com/mrmlnc/fast-glob#options-3) for details.
 
 ### `getRoots(options)`
 
@@ -93,7 +88,7 @@ In fact, the config module just exports an object which is then used as the `opt
 
 ## Requirements
 
-* NodeJS engine v9.11.2+
+* NodeJS engine v10.0.0+
 * Less pre-processor v2.0.0+
 
 ## Caveats
