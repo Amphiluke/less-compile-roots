@@ -8,10 +8,10 @@
   "exports": "./test-api.mjs",
   "scripts": {
     "cleanup": "del 'less/*.css' 'less/*.css.map'",
-    "test-cli": "del 'less/*.css' && less-compile-roots --pattern=less/*.less",
-    "test-cli-config": "del 'less/*.css' && less-compile-roots --config=less-compile-config.cjs",
-    "test-api-mjs": "del 'less/*.css' && node ./test-api.mjs",
-    "test-api-cjs": "del 'less/*.css' && node ./test-api.cjs"
+    "test-cli": "npm run cleanup && less-compile-roots --pattern=less/*.less",
+    "test-cli-config": "npm run cleanup && less-compile-roots --config=less-compile-config.cjs",
+    "test-api-mjs": "npm run cleanup && node ./test-api.mjs",
+    "test-api-cjs": "npm run cleanup && node ./test-api.cjs"
   },
   "author": "Amphiluke",
   "license": "MIT",
