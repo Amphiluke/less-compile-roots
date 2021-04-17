@@ -10,7 +10,7 @@
     "require": "./dist/index.cjs"
   },
   "bin": {
-    "less-compile-roots": "./bin/less-compile-roots.js"
+    "less-compile-roots": "./bin/less-compile-roots.cjs"
   },
   "files": [
     "bin",
