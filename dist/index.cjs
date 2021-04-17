@@ -6,6 +6,10 @@ var fs = require('fs');
 var path = require('path');
 var fastGlob = require('fast-glob');
 
+function _interopNamespaceDefaultOnly(e) {
+    return Object.freeze({__proto__: null, 'default': e});
+}
+
 let setExt = (path, ext, oldExtRE = /\.less$/) => path.replace(oldExtRE, "") + ext;
 
 let flat = Array.prototype.flat ? list => list.flat() : list => [].concat(...list);
@@ -30,7 +34,7 @@ async function getImports(entries) {
 }
 
 async function compile(entries, lessOptions) {
-    let less = await Promise.resolve().then(function () { return require('less'); });
+    let less = (await Promise.resolve().then(function () { return /*#__PURE__*/_interopNamespaceDefaultOnly(require('less')); })).default;
     let inlineMap = lessOptions.sourceMap && lessOptions.sourceMap.sourceMapFileInline;
     let promises = entries.map(async entry => {
         let data = await fs.promises.readFile(entry, "utf8");

@@ -3,7 +3,7 @@ export default {
     output: {
         file: "dist/index.cjs",
         format: "cjs",
-        interop: false
+        interop: id => id === "less" ? "defaultOnly" : "default"
     },
     external: () => true
 };

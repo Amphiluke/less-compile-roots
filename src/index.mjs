@@ -26,7 +26,7 @@ async function getImports(entries) {
 }
 
 async function compile(entries, lessOptions) {
-    let less = await import("less");
+    let less = (await import("less")).default;
     let inlineMap = lessOptions.sourceMap && lessOptions.sourceMap.sourceMapFileInline;
     let promises = entries.map(async entry => {
         let data = await fsPromises.readFile(entry, "utf8");
