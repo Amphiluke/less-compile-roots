@@ -60,7 +60,7 @@ You may also use `less-compile-roots` through the command line interface:
 less-compile-roots --pattern=src/**/*.less
 
 # or use custom config from a specified file
-less-compile-roots --config=less-compile-config.js
+less-compile-roots --config=less-compile-config.cjs
 ```
 
 Available options:
@@ -73,6 +73,7 @@ Available options:
 Note that you cannot use the options `--pattern` and `--config` together. Specifying the `--pattern` option makes the module compile Less files using all default parameters. If you need to customize the parameters, create a config file and specify the path to it through the `--config` option (or just use the module [programmatically](#api) rather than in command line). Here is an example of such config file:
 
 ```javascript
+// less-compile-config.cjs
 let LessPlugin = require('less-plugin-myplugin');
 module.exports = {
     pattern: ["project-1/css/**/*.less", "project-2/css/**/*.less"],

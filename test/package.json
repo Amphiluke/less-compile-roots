@@ -7,8 +7,9 @@
   "main": "./test-api.cjs",
   "exports": "./test-api.mjs",
   "scripts": {
-    "cleanup": "del 'less/*.css'",
-    "test": "del 'less/*.css' && less-compile-roots --pattern=less/*.less",
+    "cleanup": "del 'less/*.css' 'less/*.css.map'",
+    "test-cli": "del 'less/*.css' && less-compile-roots --pattern=less/*.less",
+    "test-cli-config": "del 'less/*.css' && less-compile-roots --config=less-compile-config.cjs",
     "test-api-mjs": "del 'less/*.css' && node ./test-api.mjs",
     "test-api-cjs": "del 'less/*.css' && node ./test-api.cjs"
   },
