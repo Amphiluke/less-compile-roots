@@ -2,16 +2,22 @@
   "name": "less-compile-root-test",
   "version": "1.0.0",
   "description": "Simple test package for the less-compile-roots module",
-  "main": "index.js",
+  "private": true,
+  "type": "module",
+  "main": "./test-api.cjs",
+  "exports": "./test-api.mjs",
   "scripts": {
-    "test": "del 'less/*.css' && less-compile-roots --pattern=less/*.less",
-    "test-api": "del 'less/*.css' && node ./test-api.js"
+    "cleanup": "del 'less/*.css' 'less/*.css.map'",
+    "test-cli": "npm run cleanup && less-compile-roots --pattern=less/*.less",
+    "test-cli-config": "npm run cleanup && less-compile-roots --config=less-compile-config.cjs",
+    "test-api-mjs": "npm run cleanup && node ./test-api.mjs",
+    "test-api-cjs": "npm run cleanup && node ./test-api.cjs"
   },
   "author": "Amphiluke",
   "license": "MIT",
   "dependencies": {
     "del-cli": "^3.0.1",
-    "less": "^3.12.2",
-    "less-compile-roots": "file:../less-compile-roots-1.0.0.tgz"
+    "less": "^4.1.1",
+    "less-compile-roots": "file:../less-compile-roots-2.0.0.tgz"
   }
 }

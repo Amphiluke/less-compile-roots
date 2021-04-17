@@ -1,6 +1,6 @@
-let lessCompileRoots = require("less-compile-roots");
+let {compileRoots} = require("less-compile-roots");
 
-lessCompileRoots.compileRoots({
+compileRoots({
     pattern: "less/**/*.less"
 })
 .then(rootEntries => {

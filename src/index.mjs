@@ -1,10 +1,7 @@
-let fs = require("fs");
-let util = require("util");
-let path = require("path");
-let fastGlob = require("fast-glob");
+import {promises as fsPromises} from "fs";
+import path from "path";
+import fastGlob from "fast-glob";
 
-let readFile = util.promisify(fs.readFile);
-let writeFile = util.promisify(fs.writeFile);
 let setExt = (path, ext, oldExtRE = /\.less$/) => path.replace(oldExtRE, "") + ext;
 
 let flat = Array.prototype.flat ? list => list.flat() : list => [].concat(...list);
@@ -13,7 +10,7 @@ async function getImports(entries) {
     let commentRE = /\/\*[\s\S]*?\*\/|\/\/\s*@import[^;]+;/g;
     let importRE = /(?<=@import\s[^"']*["']).+?(?=['"]\s*;)/g;
     let promises = entries.map(async entry => {
-        let data = await readFile(entry, "utf8");
+        let data = await fsPromises.readFile(entry, "utf8");
         data = data.replace(commentRE, "");
         let dir = path.dirname(entry);
         return (data.match(importRE) || []).map(importPath => {
@@ -28,20 +25,20 @@ async function getImports(entries) {
     return new Set(flat(importLists));
 }
 
-function compile(entries, lessOptions) {
-    let less = require("less");
+async function compile(entries, lessOptions) {
+    let less = (await import("less")).default;
     let inlineMap = lessOptions.sourceMap && lessOptions.sourceMap.sourceMapFileInline;
     let promises = entries.map(async entry => {
-        let data = await readFile(entry, "utf8");
+        let data = await fsPromises.readFile(entry, "utf8");
         let {css, map} = await less.render(data, {
             ...lessOptions,
             filename: entry
         });
-        let writeCSS = writeFile(setExt(entry, ".css"), css);
+        let writeCSS = fsPromises.writeFile(setExt(entry, ".css"), css);
         if (!map || inlineMap) {
             return writeCSS;
         }
-        let writeMap = writeFile(setExt(entry, ".css.map"), map);
+        let writeMap = fsPromises.writeFile(setExt(entry, ".css.map"), map);
         return Promise.all([writeCSS, writeMap]);
     });
     return Promise.all(promises);
