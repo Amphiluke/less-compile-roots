@@ -1,7 +1,10 @@
 let {compileRoots} = require("less-compile-roots");
 
 compileRoots({
-    pattern: "less/**/*.less"
+    pattern: "less/**/*.less",
+    lessOptions: {
+        sourceMap: {}
+    }
 })
 .then(rootEntries => {
     console.info("Compiled root files:");
