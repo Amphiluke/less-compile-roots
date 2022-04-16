@@ -36,11 +36,11 @@
   },
   "homepage": "https://github.com/Amphiluke/less-compile-roots#readme",
   "dependencies": {
-    "fast-glob": "^3.2.5"
+    "fast-glob": "^3.2.11"
   },
   "devDependencies": {
-    "eslint": "^7.28.0",
-    "rollup": "^2.51.2"
+    "eslint": "^8.13.0",
+    "rollup": "^2.70.2"
   },
   "peerDependencies": {
     "less": ">=2.0.0"

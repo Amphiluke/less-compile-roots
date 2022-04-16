@@ -6,9 +6,7 @@ var fs = require('fs');
 var path = require('path');
 var fastGlob = require('fast-glob');
 
-function _interopNamespaceDefaultOnly(e) {
-    return Object.freeze({__proto__: null, 'default': e});
-}
+function _interopNamespaceDefaultOnly (e) { return Object.freeze({ __proto__: null, 'default': e }); }
 
 let setExt = (path, ext, oldExtRE = /\.less$/) => path.replace(oldExtRE, "") + ext;
 
