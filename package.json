@@ -1,6 +1,6 @@
 {
   "name": "less-compile-roots",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Tool for extracting and compiling root Less files",
   "type": "module",
   "main": "./dist/index.cjs",
@@ -36,11 +36,11 @@
   },
   "homepage": "https://github.com/Amphiluke/less-compile-roots#readme",
   "dependencies": {
-    "fast-glob": "^3.2.12"
+    "fast-glob": "^3.3.0"
   },
   "devDependencies": {
-    "eslint": "^8.27.0",
-    "rollup": "^3.3.0"
+    "eslint": "^8.45.0",
+    "rollup": "^3.26.0"
   },
   "peerDependencies": {
     "less": ">=2.0.0"

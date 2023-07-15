@@ -18,6 +18,6 @@
   "dependencies": {
     "del-cli": "^5.0.0",
     "less": "^4.1.3",
-    "less-compile-roots": "file:../less-compile-roots-2.0.0.tgz"
+    "less-compile-roots": "file:../less-compile-roots-2.0.1.tgz"
   }
 }
