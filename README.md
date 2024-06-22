@@ -10,7 +10,8 @@ Unfortunately, the official Less compiler does not currently provide a way to pe
 npm install less-compile-roots
 ```
 
-:warning: Note that the `less-compile-roots` module uses [`less`](https://www.npmjs.com/package/less) as a peer dependency, and you need to have the `less` package installed explicitly in your project as well.
+> [!NOTE]
+> Note that the `less-compile-roots` module uses [`less`](https://www.npmjs.com/package/less) as a peer dependency, and you need to have the `less` package installed explicitly in your project as well.
 
 ## Usage
 
