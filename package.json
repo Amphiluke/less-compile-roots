@@ -18,7 +18,7 @@
     "src"
   ],
   "scripts": {
-    "lint": "eslint src/**/*.mjs",
+    "lint": "eslint",
     "build": "rollup -c"
   },
   "repository": {
@@ -36,11 +36,14 @@
   },
   "homepage": "https://github.com/Amphiluke/less-compile-roots#readme",
   "dependencies": {
-    "fast-glob": "^3.3.0"
+    "fast-glob": "^3.3.2"
   },
   "devDependencies": {
-    "eslint": "^8.45.0",
-    "rollup": "^3.26.0"
+    "@eslint/js": "^9.5.0",
+    "@stylistic/eslint-plugin-js": "^2.2.2",
+    "eslint": "^9.5.0",
+    "globals": "^15.6.0",
+    "rollup": "^4.18.0"
   },
   "peerDependencies": {
     "less": ">=2.0.0"
