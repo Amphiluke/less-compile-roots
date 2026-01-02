@@ -10,6 +10,7 @@
     "cleanup": "del 'less/*.css' 'less/*.css.map'",
     "test-cli": "npm run cleanup && less-compile-roots --pattern=less/*.less",
     "test-cli-config": "npm run cleanup && less-compile-roots --config=less-compile-config.cjs",
+    "test-cli-config-esm": "npm run cleanup && less-compile-roots --config=less-compile-config.mjs",
     "test-api-mjs": "npm run cleanup && node ./test-api.mjs",
     "test-api-cjs": "npm run cleanup && node ./test-api.cjs"
   },

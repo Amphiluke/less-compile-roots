@@ -73,7 +73,11 @@ function getArg(name) {
     } else if (configPath) {
         let path = require("path");
         configPath = path.join(process.cwd(), configPath);
-        handlers.compile(require(configPath));
+        let config = require(configPath);
+        if (config[Symbol.toStringTag] === "Module") { // ES module?
+            config = config.default;
+        }
+        handlers.compile(config);
     } else {
         console.error("You must either specify the file pattern or provide the config file path");
         console.info("Run ‘less-compile-roots --help’ to get usage info");
