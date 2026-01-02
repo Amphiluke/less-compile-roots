@@ -67,16 +67,17 @@ less-compile-roots --config=less-compile-config.cjs
 Available options:
 
 * `--pattern=<glob>`: a glob pattern (or several comma-separated patterns) matching your source Less files;
-* `--config=<path>`: path to a config module;
+* `--config=<path>`: path to a config module (both CommonJS and ECMAScript module formats are supported);
 * `-h`, `--help`: print CLI usage info;
 * `-v`, `--version`: print the installed package version.
 
 Note that you cannot use the options `--pattern` and `--config` together. Specifying the `--pattern` option makes the module compile Less files using all default parameters. If you need to customize the parameters, create a config file and specify the path to it through the `--config` option (or just use the module [programmatically](#api) rather than in command line). Here is an example of such config file:
 
 ```javascript
-// less-compile-config.cjs
-let LessPlugin = require('less-plugin-myplugin');
-module.exports = {
+// less-compile-config.mjs
+import LessPlugin from "less-plugin-myplugin";
+
+export default {
     pattern: ["project-1/css/**/*.less", "project-2/css/**/*.less"],
     lessOptions: {
         plugins: [LessPlugin],
