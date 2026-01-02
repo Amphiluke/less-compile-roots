@@ -1,8 +1,7 @@
 'use strict';
 
-var fs = require('fs');
-var path = require('path');
-var fastGlob = require('fast-glob');
+var promises = require('node:fs/promises');
+var path = require('node:path');
 
 let setExt = (path, ext, oldExtRE = /\.less$/) => path.replace(oldExtRE, "") + ext;
 
@@ -11,8 +10,8 @@ let flat = Array.prototype.flat ? list => list.flat() : list => [].concat(...lis
 async function getImports(entries) {
     let commentRE = /\/\*[\s\S]*?\*\/|\/\/\s*@import[^;]+;/g;
     let importRE = /(?<=@import\s[^"']*["']).+?(?=['"]\s*;)/g;
-    let promises = entries.map(async entry => {
-        let data = await fs.promises.readFile(entry, "utf8");
+    let promises$1 = entries.map(async entry => {
+        let data = await promises.readFile(entry, "utf8");
         data = data.replace(commentRE, "");
         let dir = path.dirname(entry);
         return (data.match(importRE) || []).map(importPath => {
@@ -23,31 +22,31 @@ async function getImports(entries) {
             return importPath;
         });
     });
-    let importLists = await Promise.all(promises);
+    let importLists = await Promise.all(promises$1);
     return new Set(flat(importLists));
 }
 
 async function compile(entries, lessOptions) {
     let less = (await import('less')).default;
     let inlineMap = lessOptions.sourceMap && lessOptions.sourceMap.sourceMapFileInline;
-    let promises = entries.map(async entry => {
-        let data = await fs.promises.readFile(entry, "utf8");
+    let promises$1 = entries.map(async entry => {
+        let data = await promises.readFile(entry, "utf8");
         let {css, map} = await less.render(data, {
             ...lessOptions,
             filename: entry
         });
-        let writeCSS = fs.promises.writeFile(setExt(entry, ".css"), css);
+        let writeCSS = promises.writeFile(setExt(entry, ".css"), css);
         if (!map || inlineMap) {
             return writeCSS;
         }
-        let writeMap = fs.promises.writeFile(setExt(entry, ".css.map"), map);
+        let writeMap = promises.writeFile(setExt(entry, ".css.map"), map);
         return Promise.all([writeCSS, writeMap]);
     });
-    return Promise.all(promises);
+    return Promise.all(promises$1);
 }
 
 async function getRoots({pattern, globOptions = {}}) {
-    let entries = await fastGlob(pattern, globOptions);
+    let entries = await Array.fromAsync(promises.glob(pattern, globOptions));
     let importSet = await getImports(entries);
     return entries.filter(entry => !importSet.has(path.normalize(entry)));
 }

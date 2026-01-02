@@ -44,9 +44,9 @@ The method picks out the root Less files from all files matching the provided gl
 
 The supported options are:
 
-* `pattern` _(required)_: a glob pattern (or a list of patterns) matching your source Less files. Please refer the [fast-glob docs](https://github.com/mrmlnc/fast-glob#patterns) for details;
+* `pattern` _(required)_: a glob pattern (or a list of patterns) matching your source Less files. Please refer the [`fsPromises.glob()` docs](https://nodejs.org/api/fs.html#fspromisesglobpattern-options) for details;
 * `lessOptions` _(optional)_: the options object to pass to the [`less.render` method](http://lesscss.org/usage/#programmatic-usage). The [available options](http://lesscss.org/usage/#less-options) are listed in the official Less documentation;
-* `globOptions` _(optional)_: the options object to pass to the fast-glob function. See their [docs](https://github.com/mrmlnc/fast-glob#options-3) for details.
+* `globOptions` _(optional)_: the options object to pass to `fsPromises.glob()`. See [Node.js docs](https://nodejs.org/api/fs.html#fspromisesglobpattern-options) for details.
 
 ### `getRoots(options)`
 
@@ -90,7 +90,7 @@ In fact, the config module just exports an object which is then used as the `opt
 
 ## Requirements
 
-* NodeJS engine v10.0.0+
+* NodeJS engine v22.17.0+
 * Less pre-processor v2.0.0+
 
 ## Caveats

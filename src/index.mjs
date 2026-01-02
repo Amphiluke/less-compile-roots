@@ -1,6 +1,5 @@
-import {promises as fsPromises} from "fs";
-import path from "path";
-import fastGlob from "fast-glob";
+import {readFile, writeFile, glob} from "node:fs/promises";
+import path from "node:path";
 
 let setExt = (path, ext, oldExtRE = /\.less$/) => path.replace(oldExtRE, "") + ext;
 
@@ -10,7 +9,7 @@ async function getImports(entries) {
     let commentRE = /\/\*[\s\S]*?\*\/|\/\/\s*@import[^;]+;/g;
     let importRE = /(?<=@import\s[^"']*["']).+?(?=['"]\s*;)/g;
     let promises = entries.map(async entry => {
-        let data = await fsPromises.readFile(entry, "utf8");
+        let data = await readFile(entry, "utf8");
         data = data.replace(commentRE, "");
         let dir = path.dirname(entry);
         return (data.match(importRE) || []).map(importPath => {
@@ -29,23 +28,23 @@ async function compile(entries, lessOptions) {
     let less = (await import("less")).default;
     let inlineMap = lessOptions.sourceMap && lessOptions.sourceMap.sourceMapFileInline;
     let promises = entries.map(async entry => {
-        let data = await fsPromises.readFile(entry, "utf8");
+        let data = await readFile(entry, "utf8");
         let {css, map} = await less.render(data, {
             ...lessOptions,
             filename: entry
         });
-        let writeCSS = fsPromises.writeFile(setExt(entry, ".css"), css);
+        let writeCSS = writeFile(setExt(entry, ".css"), css);
         if (!map || inlineMap) {
             return writeCSS;
         }
-        let writeMap = fsPromises.writeFile(setExt(entry, ".css.map"), map);
+        let writeMap = writeFile(setExt(entry, ".css.map"), map);
         return Promise.all([writeCSS, writeMap]);
     });
     return Promise.all(promises);
 }
 
 export async function getRoots({pattern, globOptions = {}}) {
-    let entries = await fastGlob(pattern, globOptions);
+    let entries = await Array.fromAsync(glob(pattern, globOptions));
     let importSet = await getImports(entries);
     return entries.filter(entry => !importSet.has(path.normalize(entry)));
 }
