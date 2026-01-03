@@ -6,7 +6,7 @@ Unfortunately, the official Less compiler does not currently provide a way to pe
 
 ## Installation
 
-```
+```sh
 npm install less-compile-roots
 ```
 
@@ -61,7 +61,7 @@ You may also use `less-compile-roots` through the command line interface:
 less-compile-roots --pattern=src/**/*.less
 
 # or use custom config from a specified file
-less-compile-roots --config=less-compile-config.cjs
+less-compile-roots --config=less-compile-config.mjs
 ```
 
 Available options:

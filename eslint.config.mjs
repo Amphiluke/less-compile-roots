@@ -7,9 +7,9 @@ export default [
         ignores: ["dist/*", "test/*", "rollup.config.mjs"],
     },
     {
-        files: ["src/**/*.mjs", "bin/**/*.cjs", "eslint.config.mjs"],
+        files: ["src/**/*.mjs", "bin/**/*.mjs", "eslint.config.mjs"],
         languageOptions: {
-            ecmaVersion: 2020,
+            ecmaVersion: 2025,
             sourceType: "module",
             globals: {
                 ...globals.node,

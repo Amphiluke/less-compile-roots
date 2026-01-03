@@ -1,47 +1,46 @@
 #!/usr/bin/env node
 
-let lessCompileRoots = require("less-compile-roots");
-let {name, version, description, homepage} = require("../package.json");
+import {default as process, argv, cwd} from "node:process";
+import {join} from "node:path";
+import {styleText} from "node:util";
+import {compileRoots} from "less-compile-roots";
+import pkg from "../package.json" with {type: "json"};
 
-let handlers = {
-    help() {
-        console.info(`
-${name} v${version}
-${description}
-${homepage}
+function help() {
+    console.info(`
+${pkg.name} v${pkg.version}
+${styleText("dim", pkg.description)}
+${styleText("dim", pkg.homepage)}
 
-Usage:
+${styleText("bold", "Usage:")}
   less-compile-roots --pattern=<glob>
   less-compile-roots --config=<path>
   less-compile-roots --help
   less-compile-roots --version
 
-Options:
+${styleText("bold", "Options:")}
   --pattern=<glob>   Glob pattern (or several comma-separated patterns)
   --config=<path>    Use config from the specified file
   -h, --help         Display usage info
   -v, --version      Print the installed package version`);
-    },
+}
 
-    version() {
-        console.info(version);
-    },
+function version() {
+    console.info(pkg.version);
+}
 
-    compile(config) {
-        console.info("Compiling, please wait...");
-        lessCompileRoots.compileRoots(config)
-            .then(() => {
-                console.info("Done!");
-            })
-            .catch(reason => {
-                console.error(reason);
-            });
+async function compile(config) {
+    console.info("Compiling, please wait...");
+    try {
+        await compileRoots(config);
+        console.info("Done!");
+    } catch (error) {
+        console.error(error);
     }
-};
+}
 
-let [,, ...args] = process.argv;
 function getArg(name) {
-    for (let arg of args) {
+    for (let arg of argv.slice(2)) {
         if (arg === name) {
             return true;
         }
@@ -52,14 +51,14 @@ function getArg(name) {
     return undefined;
 }
 
-(() => {
+(async () => {
     if (getArg("--help") || getArg("-h")) {
-        handlers.help();
+        help();
         return;
     }
 
     if (getArg("--version") || getArg("-v")) {
-        handlers.version();
+        version();
         return;
     }
 
@@ -69,15 +68,10 @@ function getArg(name) {
         if (configPath) {
             console.warn("The ‘--config’ option is ignored when the ‘--pattern’ option is present!");
         }
-        handlers.compile({pattern: pattern.split(",")});
+        compile({pattern: pattern.split(",")});
     } else if (configPath) {
-        let path = require("path");
-        configPath = path.join(process.cwd(), configPath);
-        let config = require(configPath);
-        if (config[Symbol.toStringTag] === "Module") { // ES module?
-            config = config.default;
-        }
-        handlers.compile(config);
+        configPath = join(cwd(), configPath);
+        compile((await import(configPath)).default);
     } else {
         console.error("You must either specify the file pattern or provide the config file path");
         console.info("Run ‘less-compile-roots --help’ to get usage info");
