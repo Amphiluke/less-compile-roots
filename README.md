@@ -1,8 +1,26 @@
 # less-compile-roots
 
+## Synopsis
+
 It is a common practice to modularize Less files (on a component or similar base) and then combine (`@import`) them in several resulting bundles. In most cases you only want to compile those resulting bundles to get a few combined CSS files, while compiling every single component file is pointless and time-wasting.
 
-Unfortunately, the official Less compiler does not currently provide a way to perform such selective compilation automatically. The `less-compile-roots` module was created to meet this lack. It is a simple tool for extracting and compiling root Less files (i.e. the files that are not being imported by other Less files).
+```yml
+styles/
+  - about/
+    - contacts.less       # (partial, skip CSS generation)
+    - index.less          # (root, compile to CSS)
+    - photo-gallery.less  # (partial, skip CSS generation)
+  - catalog/
+    - filter-form.less    # (partial, skip CSS generation)
+    - index.less          # (root, compile to CSS)
+    - print.less          # (root, compile to CSS)
+    - product-card.less   # (partial, skip CSS generation)
+  - lib/
+    - mixins.less         # (partial, skip CSS generation)
+    - variables.less      # (partial, skip CSS generation)
+```
+
+Unfortunately, the official Less compiler does not currently provide a way to perform such selective compilation automatically. The `less-compile-roots` package was created to meet this lack. It is a simple tool for extracting and compiling *root Less files* (i.e. the files, or bundles, that are not being imported by other Less files).
 
 ## Installation
 
