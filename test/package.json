@@ -7,7 +7,7 @@
   "main": "./test-api.cjs",
   "exports": "./test-api.mjs",
   "scripts": {
-    "cleanup": "del 'less/*.css' 'less/*.css.map'",
+    "cleanup": "rm ./less/*.css*",
     "test-cli": "npm run cleanup && less-compile-roots --pattern=less/*.less",
     "test-cli-config": "npm run cleanup && less-compile-roots --config=less-compile-config.cjs",
     "test-cli-config-esm": "npm run cleanup && less-compile-roots --config=less-compile-config.mjs",
@@ -17,7 +17,6 @@
   "author": "Amphiluke",
   "license": "MIT",
   "dependencies": {
-    "del-cli": "^7.0.0",
     "less": "^4.4.2",
     "less-compile-roots": "file:../less-compile-roots-3.0.0.tgz"
   }

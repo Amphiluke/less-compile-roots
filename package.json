@@ -3,23 +3,17 @@
   "version": "3.0.0",
   "description": "Tool for extracting and compiling root Less files",
   "type": "module",
-  "main": "./dist/index.cjs",
-  "module": "./src/index.mjs",
-  "exports": {
-    "import": "./src/index.mjs",
-    "require": "./dist/index.cjs"
-  },
+  "main": "./src/index.mjs",
+  "exports": "./src/index.mjs",
   "bin": {
     "less-compile-roots": "./bin/less-compile-roots.mjs"
   },
   "files": [
     "bin",
-    "dist",
     "src"
   ],
   "scripts": {
-    "lint": "eslint",
-    "build": "rollup -c"
+    "lint": "eslint"
   },
   "repository": {
     "type": "git",
@@ -39,8 +33,7 @@
     "@eslint/js": "^9.39.2",
     "@stylistic/eslint-plugin": "^5.6.1",
     "eslint": "^9.39.2",
-    "globals": "^17.0.0",
-    "rollup": "^4.54.0"
+    "globals": "^17.0.0"
   },
   "peerDependencies": {
     "less": ">=2.0.0"

@@ -3,8 +3,6 @@ import path from "node:path";
 
 let setExt = (path, ext, oldExtRE = /\.less$/) => path.replace(oldExtRE, "") + ext;
 
-let flat = Array.prototype.flat ? list => list.flat() : list => [].concat(...list);
-
 async function getImports(entries) {
     let commentRE = /\/\*[\s\S]*?\*\/|\/\/\s*@import[^;]+;/g;
     let importRE = /(?<=@import\s[^"']*["']).+?(?=['"]\s*;)/g;
@@ -21,7 +19,7 @@ async function getImports(entries) {
         });
     });
     let importLists = await Promise.all(promises);
-    return new Set(flat(importLists));
+    return new Set(importLists.flat());
 }
 
 async function compile(entries, lessOptions) {
