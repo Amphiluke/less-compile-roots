@@ -17,7 +17,7 @@
   "author": "Amphiluke",
   "license": "MIT",
   "dependencies": {
-    "less": "^4.4.2",
+    "less": "^4.8.1",
     "less-compile-roots": "file:../less-compile-roots-3.0.0.tgz"
   }
 }
